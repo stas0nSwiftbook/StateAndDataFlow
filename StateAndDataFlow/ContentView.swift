@@ -18,7 +18,7 @@ struct ContentView: View {
             Spacer()
             ButtonView(title: "Start", action: timer.startTimer, background: .red)
             Spacer()
-            ButtonView(title: "Logout", action: appStorageManager.clear, background: .blue)
+            ButtonView(title: "Logout", action: appStorageManager.logout, background: .blue)
         }
     }
 }

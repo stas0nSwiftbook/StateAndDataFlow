@@ -11,7 +11,6 @@ struct RegisterView: View {
     @EnvironmentObject private var appStorageManager: AppStorageManager
     @State private var charCounter = 0
     @State private var textColor = Color.red
-    @State private var alertIsShown = false
     @State private var isDisabled = true
     
     var body: some View {
@@ -20,9 +19,7 @@ struct RegisterView: View {
                 TextField("Enter your name", text: $appStorageManager.name)
                     .multilineTextAlignment(.center)
                     .onChange(of: appStorageManager.name) { _ in
-                        charCounter = appStorageManager.name.count
-                        textColor = charCounter > 2 ? .green : .red
-                        isDisabled = textColor == .green ? false : true
+                        textFieldCheck()
                     }
                 
                 Text("\(charCounter)")
@@ -42,9 +39,13 @@ struct RegisterView: View {
     private func registerUser() {
         if !appStorageManager.name.isEmpty, appStorageManager.name.count > 2 {
             appStorageManager.isRegistered = true
-        } else {
-            alertIsShown = true
         }
+    }
+    
+    private func textFieldCheck() {
+        charCounter = appStorageManager.name.count
+        textColor = charCounter > 2 ? .green : .red
+        isDisabled = textColor == .green ? false : true
     }
 }
 

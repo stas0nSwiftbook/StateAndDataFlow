@@ -12,7 +12,7 @@ class AppStorageManager: ObservableObject {
     @AppStorage("name") var name = ""
     @AppStorage("isRegistered") var isRegistered = false
     
-    func clear() {
+    func logout() {
         name = ""
         isRegistered = false
     }
