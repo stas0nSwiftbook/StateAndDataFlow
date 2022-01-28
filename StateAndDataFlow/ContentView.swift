@@ -18,7 +18,7 @@ struct ContentView: View {
             Spacer()
             ButtonView(title: "Start", action: timer.startTimer, background: .red)
             Spacer()
-            ButtonView(title: "Logout", action: appStorageManager.logout, background: .blue)
+            ButtonView(title: "Logout", action: appStorageManager.clear, background: .blue)
         }
     }
 }
@@ -27,6 +27,16 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
             .environmentObject(AppStorageManager())
+    }
+}
+
+struct TextView: View {
+    let text: String
+    
+    var body: some View {
+        Text(text)
+            .font(.largeTitle)
+            .padding(.top, 100)
     }
 }
 
@@ -52,12 +62,3 @@ struct ButtonView: View {
     }
 }
 
-struct TextView: View {
-    let text: String
-    
-    var body: some View {
-        Text(text)
-            .font(.largeTitle)
-            .padding(.top, 100)
-    }
-}
