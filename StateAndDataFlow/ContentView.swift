@@ -13,12 +13,8 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Text("Hi, \(appStorageManager.name)")
-                .font(.largeTitle)
-                .padding(.top, 100)
-            Text("\(timer.counter)")
-                .font(.largeTitle)
-                .padding(.top, 100)
+            TextView(text: "Hi, \(appStorageManager.name)")
+            TextView(text: "\(timer.counter)")
             Spacer()
             ButtonView(title: "Start", action: timer.startTimer, background: .red)
             Spacer()
@@ -53,5 +49,15 @@ struct ButtonView: View {
             RoundedRectangle(cornerRadius: 20)
                 .stroke(Color.black, lineWidth: 4)
         )
+    }
+}
+
+struct TextView: View {
+    let text: String
+    
+    var body: some View {
+        Text(text)
+            .font(.largeTitle)
+            .padding(.top, 100)
     }
 }
