@@ -8,26 +8,44 @@
 import SwiftUI
 
 struct RegisterView: View {
-    @EnvironmentObject private var userManager: UserManager
-    @State private var name = ""
+    @EnvironmentObject private var appStorageManager: AppStorageManager
+    @State private var charCounter = 0
+    @State private var textColor = Color.red
+    @State private var alertIsShown = false
+    @State private var isDisabled = true
     
     var body: some View {
         VStack {
-            TextField("Enter your name", text: $name)
-                .multilineTextAlignment(.center)
+            HStack {
+                TextField("Enter your name", text: $appStorageManager.name)
+                    .multilineTextAlignment(.center)
+                    .onChange(of: appStorageManager.name) { _ in
+                        charCounter = appStorageManager.name.count
+                        textColor = charCounter > 2 ? .green : .red
+                        isDisabled = textColor == .green ? false : true
+                    }
+                    .alert("Wrong name", isPresented: $alertIsShown, actions: {}) {
+                        Text("Name must be at least 3 characters.")
+                    }
+                
+                Text("\(charCounter)")
+                    .foregroundColor(textColor)
+            }
             Button(action: registerUser) {
                 HStack {
                     Image(systemName: "checkmark.circle")
                     Text("OK")
                 }
             }
+            .disabled(isDisabled)
         }
     }
     
     private func registerUser() {
-        if !name.isEmpty {
-            userManager.name = name
-            userManager.isRegister.toggle()
+        if !appStorageManager.name.isEmpty, appStorageManager.name.count > 2 {
+            appStorageManager.isRegistered = true
+        } else {
+            alertIsShown = true
         }
     }
 }
