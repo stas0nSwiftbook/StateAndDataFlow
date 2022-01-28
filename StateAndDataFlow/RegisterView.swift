@@ -24,13 +24,11 @@ struct RegisterView: View {
                         textColor = charCounter > 2 ? .green : .red
                         isDisabled = textColor == .green ? false : true
                     }
-                    .alert("Wrong name", isPresented: $alertIsShown, actions: {}) {
-                        Text("Name must be at least 3 characters.")
-                    }
                 
                 Text("\(charCounter)")
                     .foregroundColor(textColor)
             }
+            
             Button(action: registerUser) {
                 HStack {
                     Image(systemName: "checkmark.circle")

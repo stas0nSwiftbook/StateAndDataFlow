@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var timer = TimeCounter()
     @EnvironmentObject private var appStorageManager: AppStorageManager
+    @StateObject private var timer = TimeCounter()
     
     var body: some View {
         VStack {
@@ -20,21 +20,9 @@ struct ContentView: View {
                 .font(.largeTitle)
                 .padding(.top, 100)
             Spacer()
-            ButtonView(timer: timer)
+            ButtonView(title: "Start", action: timer.startTimer, background: .red)
             Spacer()
-            Button(action: appStorageManager.clear) {
-                Text("Logout")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-            }
-            .frame(width: 200, height: 60)
-            .background(Color.blue)
-            .cornerRadius(20)
-            .overlay(
-                RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color.black, lineWidth: 4)
-            )
+            ButtonView(title: "Logout", action: appStorageManager.clear, background: .blue)
         }
     }
 }
@@ -47,17 +35,19 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct ButtonView: View {
-    @ObservedObject var timer: TimeCounter
+    let title: String
+    let action: () -> Void
+    let background: Color
     
     var body: some View {
-        Button(action: timer.startTimer) {
-            Text(timer.buttonTitle)
+        Button(action: action) {
+            Text(title)
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(.white)
         }
         .frame(width: 200, height: 60)
-        .background(Color.red)
+        .background(background)
         .cornerRadius(20)
         .overlay(
             RoundedRectangle(cornerRadius: 20)
